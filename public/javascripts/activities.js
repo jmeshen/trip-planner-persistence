@@ -47,7 +47,7 @@ $('.add-activity').on('click', function() {
   currentDay[type].push(activity)
 
   currentDay.addActivity(type, activity)
-
+  console.log(type, id, activity);
   // $.ajax({
   //   type: 'POST',
   //   url: '/days/dayTarget/hotel',

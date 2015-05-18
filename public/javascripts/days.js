@@ -1,5 +1,7 @@
-var days = []
-var currentDay
+var days = [];
+var currentDay;
+var curDayID;
+
 
 var Day = function() {
   this.dayNum = days.length + 1
@@ -44,15 +46,15 @@ Day.prototype.drawDayBtn = function() {
   var self = this
 
   var $dayBtn = templates.get('day-btn')//$('<button class="btn btn-circle day-btn">' + this.dayNum + '</button>')
-  $dayBtn.text(this.dayNum)
-  $('#add-day').before($dayBtn)
+  $dayBtn.text(this.dayNum);
+  $('#add-day').before($dayBtn);
 
   $dayBtn.on('click', function() {
-    if(currentDay) currentDay.clearMarkersFromMap()
-    currentDay = self
-    currentDay.addMarkersToMap()
-    $('#itinerary #day-panel').replaceWith(self.$dayPanel)
-  })
+    if(currentDay) currentDay.clearMarkersFromMap();
+    currentDay = self;
+    currentDay.addMarkersToMap();
+    $('#itinerary #day-panel').replaceWith(self.$dayPanel);
+  });
 }
 
 $('#add-day').on('click', function() {
@@ -77,15 +79,29 @@ $('#add-day').on('click', function() {
 //   });
 })
 
-var dayTarget = currentDay.dayNum.toString()
+// var dayTarget = currentDay.dayNum;
 
+// $('#day-destroyer').on('click', function() {
+//   console.log('hello?');
+// })
 
-$("#day-destroyer").on("click", function() {
-  // var dayTarget = currentDay.dayNum.toString();
+  console.log('hello?');
+
+$('#day-destroyer').on('click', function() {
+  console.log('hello, day destroyer reporting for duty');
+  var dayTarget = currentDay.dayNum.toString();
+  // var curDayID
+  days.forEach(function(day){
+    if(day.number.toString() === dayTarget) {
+      curDayID = day._id;
+    }
+  });
+
+  console.log(curDayID);
   $.ajax({
     type: 'DELETE',
-    url: '/days/' + dayTarget,
-    data: {number: dayTarget},
+    url: '/days/' + curDayID,
+    data: {_id: curDayID},
     success: function(res) {
       console.log("delete successful");
     }

@@ -30,14 +30,14 @@ dayRouter.post('/', function (req, res, next) {
 // GET /days/:id
 dayRouter.get('/:id', function (req, res, next) {
     // serves a particular day as json
-    models.Day.findOne({number: req.params.id}, function(err, aDay) {
+    models.Day.findOne({_id: req.params.id}, function(err, aDay) {
     	res.json(aDay);
     });
 });
 // DELETE /days/:id
 dayRouter.delete('/:id', function (req, res, next) {
     // deletes a particular day
-    models.Day.findOne({number: req.params.id}, function(err, aDay) {
+    models.Day.findOne({_id: req.params.id}, function(err, aDay) {
     	aDay.remove(function(err) {
     		if(err) return next(err);
     		res.status(200).end();
