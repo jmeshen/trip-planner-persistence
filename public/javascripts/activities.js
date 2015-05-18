@@ -48,6 +48,15 @@ $('.add-activity').on('click', function() {
 
   currentDay.addActivity(type, activity)
 
+  // $.ajax({
+  //   type: 'POST',
+  //   url: '/days/dayTarget/hotel',
+  //   // data: {hotel: },
+  //   success: function(res) {
+  //     console.log('hey this is a post request');
+  //   }
+  // })
+
   // currentDay.addActivity(type, activity)
   //find the activity id assoc w/ button
   //find correct activity object

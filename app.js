@@ -2,12 +2,17 @@ var express = require('express')
 var swig = require('swig')
 var nodeSass = require('node-sass-middleware')
 var logger = require('morgan')
+var bodyParser = require('body-parser')
+// var days = require('./routes/days');
+// var attractions = require('./routes/days');
 
 var app = express()
 var path = require('path')
 module.exports = app
 
 app.use(logger('dev'))
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 var sassMiddleware = nodeSass({
   src: __dirname + '/assets',

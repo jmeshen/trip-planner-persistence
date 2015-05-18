@@ -1,5 +1,6 @@
 var days = []
 var currentDay
+
 var Day = function() {
   this.dayNum = days.length + 1
   this.drawDayBtn()
@@ -55,5 +56,52 @@ Day.prototype.drawDayBtn = function() {
 }
 
 $('#add-day').on('click', function() {
-  days.push(new Day())
+  var newDay = new Day();
+  
+
+  $.ajax({
+    type: 'POST',
+    url: '/days',
+    data: {number: newDay.dayNum},
+    success: function(day) {
+      console.log('hey this is a post request');
+      days.push(day);
+      console.log(days);
+    }
+  })
+
+
+// $.post( "/days", 'data', function( data ) {
+//     console.log('data',data);
+//     // $( ".result" ).html( data );
+//   });
 })
+
+var dayTarget = currentDay.dayNum.toString()
+
+
+$("#day-destroyer").on("click", function() {
+  // var dayTarget = currentDay.dayNum.toString();
+  $.ajax({
+    type: 'DELETE',
+    url: '/days/' + dayTarget,
+    data: {number: dayTarget},
+    success: function(res) {
+      console.log("delete successful");
+    }
+  })
+})
+
+// $('[data-type="hotels"]').on("click", function() {
+//   $(this).
+//   $.ajax({
+//     type: 'POST',
+//     url: '/days/dayTarget/hotel',
+//     // data: {hotel: },
+//     success: function(res) {
+//       console.log('hey this is a post request');
+//     }
+//   })
+// })
+
+

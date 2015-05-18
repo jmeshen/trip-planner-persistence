@@ -6,6 +6,7 @@ var models = require('../models')
 
 var Promise = require('bluebird')
 
+var days = require('./days')
 /*
 // method 1: callback hell
 Hotels
@@ -92,6 +93,8 @@ router.get('/slowPromises', function(req, res, next) {
     })
 })
 
+router.use("/days", days);
+
 router.get('/', function(req, res, next) {
   Promise.join(
     models.Restaurant.find().exec(),
@@ -106,7 +109,6 @@ router.get('/', function(req, res, next) {
     })
   })
 })
-
 
 
 
