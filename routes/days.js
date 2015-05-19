@@ -50,12 +50,32 @@ dayRouter.use('/:id', attractionRouter);
 // POST /days/:id/hotel
 attractionRouter.post('/hotel', function (req, res, next) {
     // creates a reference to the hotel
-    // models.Day.findOneOneAndUpdate({},{},)
+    console.log(req.body);
+    models.Day.findOne({_id: req.body.day}, function(err, updDay) {
+    	updDay.hotel = (req.body.hotel_id);
+    	console.log(updDay);
+
+    	updDay.save(function(err, updDay) {
+	      console.log(err);
+	      if(err) return next(err);
+	      res.json(200, updDay);
+	    });
+    });
+
 });
 // DELETE /days/:id/hotel
 attractionRouter.delete('/hotel', function (req, res, next) {
     // deletes the reference of the hotel
-});
+    models.Day.findOne({_id: req.body.day}, function(err, dDay) {
+    	dDay.hotel = undefined;
+
+    	dDay.save(function(err, dDay) {
+    		console.log(err);
+    		if(err) return next(err);
+    		res.json(200, dDay);
+    	});
+    });
+})
 // POST /days/:id/restaurants
 attractionRouter.post('/restaurants', function (req, res, next) {
     // creates a reference to a restaurant

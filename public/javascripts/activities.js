@@ -1,6 +1,7 @@
 var $hotelAdder = $('#hotel-adder'),
     $restaurantAdder = $('#restaurant-adder'),
     $thingsToDoAdder = $('#thingsToDo-adder');
+
 var setupOptions = function() {
 
   rawData.hotels.forEach(function(h) {
@@ -47,18 +48,33 @@ $('.add-activity').on('click', function() {
   currentDay[type].push(activity)
 
   currentDay.addActivity(type, activity)
-  console.log(type, id, activity);
-  // $.ajax({
-  //   type: 'POST',
-  //   url: '/days/dayTarget/hotel',
-  //   // data: {hotel: },
-  //   success: function(res) {
-  //     console.log('hey this is a post request');
-  //   }
-  // })
+
+  var dayTarget = currentDay.dayNum.toString();
+  // var curDayID
+  days.forEach(function(day){
+    if(day.number.toString() === dayTarget) {
+      curDayID = day._id;
+    }
+  });
+
+  console.log(type, id, activity, curDayID);
+  $.ajax({
+    type: 'POST',
+    url: '/days/'+curDayID+'/hotel',
+    data: {day: curDayID,
+      hotel_name: activity.name,
+      hotel_id: id
+    },
+
+    // console.log(data),
+    success: function(res) {
+      console.log('hey this is a post request');
+    }
+  });
 
   // currentDay.addActivity(type, activity)
   //find the activity id assoc w/ button
   //find correct activity object
   //put the activity in the day somehow
-})
+});
+
