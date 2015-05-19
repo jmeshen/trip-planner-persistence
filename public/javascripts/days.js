@@ -55,6 +55,7 @@ Day.prototype.drawDayBtn = function() {
     currentDay.addMarkersToMap();
     $('#itinerary #day-panel').replaceWith(self.$dayPanel);
   });
+  console.log(currentDay);
 }
 
 $('#add-day').on('click', function() {
@@ -85,17 +86,26 @@ $('#add-day').on('click', function() {
 //   console.log('hello?');
 // })
 
-  console.log('hello?');
 
-$('#day-destroyer').on('click', function() {
-  console.log('hello, day destroyer reporting for duty');
+function findCurDayId() {
   var dayTarget = currentDay.dayNum.toString();
-  // var curDayID
   days.forEach(function(day){
     if(day.number.toString() === dayTarget) {
       curDayID = day._id;
     }
   });
+  return curDayID;
+}
+
+$('#day-destroyer').on('click', function() {
+  console.log('hello, day destroyer reporting for duty');
+  var dayTarget = currentDay.dayNum.toString();
+  // days.forEach(function(day){
+  //   if(day.number.toString() === dayTarget) {
+  //     curDayID = day._id;
+  //   }
+  // });
+findCurDayId();
 
   console.log(curDayID);
   $.ajax({
@@ -105,8 +115,8 @@ $('#day-destroyer').on('click', function() {
     success: function(res) {
       console.log("delete successful");
     }
-  })
-})
+  });
+});
 
 // $('[data-type="hotels"]').on("click", function() {
 //   $(this).
@@ -120,4 +130,25 @@ $('#day-destroyer').on('click', function() {
 //   })
 // })
 
+$('#itinerary').delegate('.remove', 'click', function() {
+
+  var hotelToDelId = currentDay.hotels[0]._id;
+  // console.log("hotel id ", hotelToDelID);
+  var curDayId = findCurDayId();
+  // console.log("current Day ", curDayId);
+
+
+  // console.log('this is $this: ',$(this));
+
+  // console.dir($(this).siblings);
+
+  $.ajax({
+    type: 'DELETE',
+    url: '/days/' + curDayId + '/hotel',
+    data: {_id: curDayId},
+    success: function(res) {
+      console.log('hotel delete successful');
+    }
+  })
+});
 
